@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -42,6 +43,16 @@ class Article
      */
     private $published;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Comment", mappedBy="author")
+     */
+    private $comments;
+
+
+    public function __construct()
+    {
+        $this->comments = new ArrayCollection();
+    }
 
     /**
      * Get id
@@ -123,6 +134,21 @@ class Article
     public function getPublished()
     {
         return $this->published;
+    }
+
+    public function getComments()
+    {
+        return $this->comments;
+    }
+
+    public function addComment(Comment $comment)
+    {
+        return $this->comments->add($comment);
+    }
+
+    public function removeComment(Comment $comment)
+    {
+        return $this->comments->remove($comment);
     }
 }
 
