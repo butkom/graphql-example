@@ -5,13 +5,14 @@
 
     <table>
         <thead>
-            <tr>
-                <th>Id</th>
-                <th>Title</th>
-                <th>Body</th>
-                <th>Published</th>
-                <th>Actions</th>
-            </tr>
+        <tr>
+            <th>Id</th>
+            <th>Title</th>
+            <th>Body</th>
+            <th>Published</th>
+            <th>Comments</th>
+            <th>Actions</th>
+        </tr>
         </thead>
         <tbody>
         {% for article in articles %}
@@ -20,6 +21,13 @@
                 <td>{{ article.title }}</td>
                 <td>{{ article.body }}</td>
                 <td>{% if article.published %}Yes{% else %}No{% endif %}</td>
+                <td>
+                    {% if article.comments %}
+                        {% for comment in article.comments %}
+                            <p>{{ comment.content }}</p>
+                        {% endfor %}
+                    {% endif %}
+                </td>
                 <td>
                     <ul>
                         <li>

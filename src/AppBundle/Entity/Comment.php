@@ -24,11 +24,16 @@ class Comment
     /**
      * @var Author
      *
-     * @ORM\Column(name="author", type="integer")
-     *
      * @ORM\ManyToOne(targetEntity="Author", inversedBy="comments")
      */
     private $author;
+
+    /**
+     * @var Article
+     *
+     * @ORM\ManyToOne(targetEntity="Article", inversedBy="comments")
+     */
+    private $article;
 
     /**
      * @var string
@@ -70,6 +75,30 @@ class Comment
     public function getAuthor(): Author
     {
         return $this->author;
+    }
+
+    /**
+     * Set article
+     *
+     * @param Article $article
+     *
+     * @return Comment
+     */
+    public function setArticle(Article $article): self
+    {
+        $this->article = $article;
+
+        return $this;
+    }
+
+    /**
+     * Get article
+     *
+     * @return Article
+     */
+    public function getArticle(): Article
+    {
+        return $this->article;
     }
 
     /**
