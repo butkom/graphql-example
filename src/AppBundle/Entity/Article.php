@@ -44,9 +44,17 @@ class Article
     private $published;
 
     /**
-     * @ORM\OneToMany(targetEntity="Comment", mappedBy="author")
+     * @ORM\OneToMany(targetEntity="Comment", mappedBy="article")
      */
     private $comments;
+
+    /**
+     * @var Author
+     *
+     * @ORM\ManyToOne(targetEntity="Author", inversedBy="articles")
+     * @ORM\JoinColumn(name="autor_id", referencedColumnName="id")
+     */
+    private $author;
 
 
     public function __construct()
@@ -136,19 +144,53 @@ class Article
         return $this->published;
     }
 
+    /**
+     * @return ArrayCollection
+     */
     public function getComments()
     {
         return $this->comments;
     }
 
+    /**
+     * @param Comment $comment
+     * @return bool|true
+     */
     public function addComment(Comment $comment)
     {
         return $this->comments->add($comment);
     }
 
+    /**
+     * @param Comment $comment
+     * @return mixed|null
+     */
     public function removeComment(Comment $comment)
     {
         return $this->comments->remove($comment);
     }
-}
 
+    /**
+     * Set author
+     *
+     * @param Author $author
+     *
+     * @return Article
+     */
+    public function setAuthor(?Author $author): self
+    {
+        $this->author = $author;
+
+        return $this;
+    }
+
+    /**
+     * Get author
+     *
+     * @return Author
+     */
+    public function getAuthor(): ?Author
+    {
+        return $this->author;
+    }
+}

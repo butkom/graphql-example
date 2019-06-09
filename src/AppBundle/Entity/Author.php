@@ -35,17 +35,15 @@ class Author
     private $comments;
 
     /**
-     * @var Article
-     *
-     * @ORM\Column(name="article", type="integer")
-     * @ORM\ManyToOne(targetEntity="Article", inversedBy="authors")
+     * @ORM\OneToMany(targetEntity="Article", mappedBy="author")
      */
-    private $article;
+    private $articles;
 
 
     public function __construct()
     {
         $this->comments = new ArrayCollection();
+        $this->articles = new ArrayCollection();
     }
 
     /**
@@ -107,26 +105,32 @@ class Author
     }
 
     /**
-     * Set article
-     *
+     * @return ArrayCollection
+     */
+    public function getArticles(): ArrayCollection
+    {
+        return $this->articles;
+    }
+
+    /**
      * @param Article $article
-     *
      * @return Author
      */
-    public function setArticle(Article $article): self
+    public function addArticle(Article $article): self
     {
-        $this->article = $article;
+        $this->articles->add($article);
 
         return $this;
     }
 
     /**
-     * Get article
-     *
-     * @return Article
+     * @param Article $article
+     * @return Author
      */
-    public function getArticle(): Article
+    public function removeArticle(Article $article): self
     {
-        return $this->article;
+        $this->articles->remove($article);
+
+        return $this;
     }
 }
